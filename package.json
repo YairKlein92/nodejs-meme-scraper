@@ -54,7 +54,9 @@
   },
   "dependencies": {
     "browserless": "^9.8.0",
+    "cheerio": "^1.0.0-rc.12",
     "html-get": "^2.9.28",
-    "puppeteer": "^19.5.0"
+    "puppeteer": "^19.5.0",
+    "request": "^2.88.2"
   }
 }
