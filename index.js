@@ -1,7 +1,6 @@
 import fs from 'fs'; //  sending downloaded image to folder
 import client from 'https'; //  downloading image
 import fetch from 'node-fetch';
-import path from 'path';
 
 const memeUrl = 'https://memegen-link-examples-upleveled.netlify.app/'; //  website with the memes
 
