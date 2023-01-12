@@ -1,32 +1,33 @@
-import fs from 'fs'; //sending downloaded image to folder
-import https from 'https'; //downloading image
+import fs from 'fs'; //  sending downloaded image to folder
+import client from 'https'; //  downloading image
 import fetch from 'node-fetch';
 import path from 'path';
 
-const memeUrl = 'https://memegen-link-examples-upleveled.netlify.app/';
+const memeUrl = 'https://memegen-link-examples-upleveled.netlify.app/'; //  website with the memes
 
 const response = await fetch(memeUrl);
-const body = await response.text();
+const body = await response.text(); // body of the html
 const memeFolder = './memes';
 
-//console.log(body);
+//  console.log(body);
 
 const expression =
   /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
 //  const exp = '^https://api.memegen.link/images$'
-let arrayLinks = [];
-let matches = body.match(expression);
-for (let match in matches) {
+
+// creating an array of all the parts that start with https://  (our regular expression)
+const arrayLinks = [];
+const matches = body.match(expression);
+for (const match in matches) {
   arrayLinks.push(matches[match]);
 }
-//  console.log(arrayLinks); //this is the array containing all the links
 
-//  getting IMG links out of the link with filter
-let newArray = arrayLinks.filter((name) => {
+//  getting IMG links out of the link with filter -> I need to download them
+const newArray = arrayLinks.filter((name) => {
   return !name.includes('memecomplete.com');
 });
 //  console.log(newArray);
-let links = newArray.slice(4, 14);
+const links = newArray.slice(4, 14);
 console.log(links);
 
 //  looping through the links in the array
@@ -38,30 +39,24 @@ function manageFolder() {
     fs.rmdir(memeFolder, () => {});
     setTimeout(() => {
       fs.mkdirSync(memeFolder);
-    }, 2000);
+    }, 600);
   } else {
     fs.mkdirSync(memeFolder);
   }
 }
-//  if (!fs.existsSync(memeFolder))
+
 function downloadImage(url, filepath) {
-  return new Promise((resolve, reject) => {
-    client.get(url, (res) => {
-      if (res.statusCode === 200) {
-        res
-          .pipe(fs.createWriteStream(filepath))
-          .on('error', reject)
-          .once('close', () => resolve(filepath));
-      } else {
-        // Consume response data to free up memory
-        res.resume();
-        reject(
-          new Error(`Request Failed With a Status Code: ${res.statusCode}`),
-        );
-      }
-    });
+  client.get(url, (res) => {
+    res.pipe(fs.createWriteStream(filepath));
   });
 }
-// Deleting directory at the beginning of the program
 
-manageFolder();
+// The Actual Program
+// Deleting directory at the beginning of the program
+//manageFolder();
+
+// Downloading The pictures and sending them to the right folder
+downloadImage(
+  'https://api.memegen.link/images/bad/your_meme_is_bad/and_you_should_feel_bad.jpg?width=300"',
+  './memes/first.jpg',
+);
