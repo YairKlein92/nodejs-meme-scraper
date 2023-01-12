@@ -1,6 +1,7 @@
 import fs from 'fs'; //sending downloaded image to folder
 import https from 'https'; //downloading image
 import fetch from 'node-fetch';
+import path from 'path';
 
 const memeUrl = 'https://memegen-link-examples-upleveled.netlify.app/';
 
@@ -50,20 +51,15 @@ function downloadImage(url, filepath) {
     });
   });
 }
-
-try {
+// Deleting directory at the beginning of the program
+function manageFolder() {
   if (fs.existsSync(memeFolder)) {
-    console.log('Directory exists.');
-    fs.rmdir(memeFolder, () => {
-      console.log('Folder Deleted!');
-    });
-    //we need to delete it
-  } else {
-    console.log('Directory does not exist.');
+    fs.rmdir(memeFolder, () => {});
+  } else if (!fs.existsSync(memeFolder)) {
+    fs.mkdirSync(memeFolder);
   }
-} catch (e) {
-  console.log('An error occurred.');
 }
-//for (let link in links) {
-//downloadImage(links[link]);
-//}
+manageFolder();
+//  for (let link in links) {
+//  downloadImage(links[link]);
+//  }

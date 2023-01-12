@@ -1,5 +1,9 @@
 import createBrowserless from 'browserless';
+import cheerio from 'cheerio';
 import getHTML from 'html-get';
+import fetch from 'node-fetch';
+import request from 'request';
+
 // Spawn Chromium process once
 const browserlessFactory = createBrowserless();
 
@@ -41,17 +45,12 @@ for (let i in imageTags) {
   sources.push(src);
 }
 
-import fetch from 'node-fetch';
-
 const memeUrl = 'https://memegen-link-examples-upleveled.netlify.app/';
 
 const response = await fetch(memeUrl);
 const body = await response.text();
 
 console.log(body);
-
-import request from 'request';
-import cheerio from 'cheerio';
 
 const URL_TO_PARSE = 'https://memegen-link-examples-upleveled.netlify.app/';
 
@@ -63,3 +62,42 @@ request(URL_TO_PARSE, (err, response, body) => {
   // Print the text nodes of the <table> in the HTML
   console.log($('img').text());
 });
+
+try {
+  if (fs.existsSync(memeFolder)) {
+    console.log('Directory exists.');
+    fs.rmdir(memeFolder, () => {
+      console.log('Folder Deleted!');
+    }); // folder deleted
+  } else {
+    console.log('Directory does not exist.');
+    fs.mkdir(memeFolder, (err) => {
+      if (err) {
+        return console.error(err);
+      }
+    });
+  }
+} catch (e) {
+  console.log('An error occurred.');
+}
+async function manageFolder() {
+  if (fs.existsSync(memeFolder)) {
+    console.log('Directory exists.');
+    await fs.rmdir(memeFolder, () => {
+      console.log('Folder Deleted!');
+    }); // folder deleted
+
+    fs.mkdir(memeFolder, (err) => {
+      if (err) {
+        return console.error(err);
+      }
+    });
+    console.log('Folder Created!');
+  } else {
+  console.log('Directory does not exist.');
+  fs.mkdir(memeFolder, (err) => {
+    if (err) {
+      return console.error(err);
+    }
+  });
+};
