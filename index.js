@@ -36,10 +36,11 @@ console.log(links);
 
 function manageFolder() {
   if (fs.existsSync(memeFolder)) {
-    fs.rmdir(memeFolder, () => {});
+    //  rmSync instead of rmdirSync bc I delete a non-empty folder, and have to force it. it makes sure to delete the folder at the beginning of the prgram even if its not empty
+    fs.rmSync(memeFolder, { recursive: true, force: true });
     setTimeout(() => {
       fs.mkdirSync(memeFolder);
-    }, 600);
+    }, 600); //  fs.rmSync(dir, { recursive: true, force: true });
   } else {
     fs.mkdirSync(memeFolder);
   }
@@ -53,10 +54,12 @@ function downloadImage(url, filepath) {
 
 // The Actual Program
 // Deleting directory at the beginning of the program
-//manageFolder();
+manageFolder();
 
 // Downloading The pictures and sending them to the right folder
-downloadImage(
-  'https://api.memegen.link/images/bad/your_meme_is_bad/and_you_should_feel_bad.jpg?width=300"',
-  './memes/first.jpg',
-);
+setTimeout(() => {
+  downloadImage(
+    'https://api.memegen.link/images/bad/your_meme_is_bad/and_you_should_feel_bad.jpg?width=300"',
+    './memes/first.jpg',
+  );
+}, 3500);

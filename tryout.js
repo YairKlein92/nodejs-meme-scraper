@@ -101,3 +101,9 @@ async function manageFolder() {
     }
   });
 };
+setTimeout(() => {
+  downloadImage(
+    'https://api.memegen.link/images/bad/your_meme_is_bad/and_you_should_feel_bad.jpg?width=300"',
+    './memes/first.jpg',
+  );
+}, 3500);
