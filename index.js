@@ -29,10 +29,21 @@ let newArray = arrayLinks.filter((name) => {
 let links = newArray.slice(4, 14);
 console.log(links);
 
-//looping through the links in the array
-///for (let link in links) {
-//}
+//  looping through the links in the array
+//  for (let link in links) {
+//  }
 
+function manageFolder() {
+  if (fs.existsSync(memeFolder)) {
+    fs.rmdir(memeFolder, () => {});
+    setTimeout(() => {
+      fs.mkdirSync(memeFolder);
+    }, 2000);
+  } else {
+    fs.mkdirSync(memeFolder);
+  }
+}
+//  if (!fs.existsSync(memeFolder))
 function downloadImage(url, filepath) {
   return new Promise((resolve, reject) => {
     client.get(url, (res) => {
@@ -52,14 +63,5 @@ function downloadImage(url, filepath) {
   });
 }
 // Deleting directory at the beginning of the program
-function manageFolder() {
-  if (fs.existsSync(memeFolder)) {
-    fs.rmdir(memeFolder, () => {});
-  } else if (!fs.existsSync(memeFolder)) {
-    fs.mkdirSync(memeFolder);
-  }
-}
+
 manageFolder();
-//  for (let link in links) {
-//  downloadImage(links[link]);
-//  }
