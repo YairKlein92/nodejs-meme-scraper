@@ -26,9 +26,9 @@ for (const match in matches) {
 const newArray = arrayLinks.filter((name) => {
   return !name.includes('memecomplete.com');
 });
-//  console.log(newArray);
+
+//  Getting only 10 links
 const links = newArray.slice(4, 14);
-console.log(links);
 
 //  looping through the links in the array
 //  for (let link in links) {
@@ -57,9 +57,10 @@ function downloadImage(url, filepath) {
 manageFolder();
 
 // Downloading The pictures and sending them to the right folder
-setTimeout(() => {
-  downloadImage(
-    'https://api.memegen.link/images/bad/your_meme_is_bad/and_you_should_feel_bad.jpg?width=300"',
-    './memes/first.jpg',
-  );
-}, 3500);
+//  Combining downloadImage and looping through.
+//Number() makes sure that it wont be a string concatenation
+for (const link in links) {
+  setTimeout(() => {
+    downloadImage(links[link], `./memes/0${Number(link) + 1}.jpg`);
+  }, 3500);
+}
