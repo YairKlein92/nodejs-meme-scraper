@@ -57,7 +57,7 @@ manageFolder();
 
 // Downloading The pictures and sending them to the right folder
 //  Combining downloadImage and looping through.
-//Number() makes sure that it wont be a string concatenation
+// Number() makes sure that it wont be a string concatenation
 for (const link in links) {
   setTimeout(() => {
     downloadImage(links[link], `./memes/0${Number(link) + 1}.jpg`);
