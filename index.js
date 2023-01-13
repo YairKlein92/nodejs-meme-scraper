@@ -4,7 +4,7 @@ import client from 'https'; //  downloading image
 import fetch from 'node-fetch';
 
 const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-
+const bar2 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 const memeUrl = 'https://memegen-link-examples-upleveled.netlify.app/'; //  website with the memes
 
 const response = await fetch(memeUrl);
@@ -39,7 +39,7 @@ const links = newArray.slice(4, 14);
 function manageFolder() {
   if (fs.existsSync(memeFolder)) {
     //  rmSync instead of rmdirSync bc I delete a non-empty folder, and have to force it. it makes sure to delete the folder at the beginning of the program even if its not empty
-    console.log('Deleting existing folder..');
+    console.log('\nDeleting existing folder..');
     fs.rmSync(memeFolder, { recursive: true, force: true });
     console.log('Folder deleted');
     setTimeout(() => {
@@ -76,7 +76,7 @@ manageFolder();
 function startProgram() {
   for (const link in links) {
     setTimeout(() => {
-      console.log(`Downloading ${Number(link) + 1}. images is in process..`);
+      console.log(`Downloading ${Number(link) + 1}. image is in process..`);
       downloadImage(links[link], `./memes/0${Number(link) + 1}.jpg`);
     }, 1500);
   }
@@ -85,4 +85,7 @@ startProgram();
 
 setTimeout(() => {
   console.log('Pictures are Downloaded.');
+}, 2500);
+setTimeout(() => {
+  bar2.start(100, 100);
 }, 2500);
