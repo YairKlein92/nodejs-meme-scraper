@@ -1,12 +1,11 @@
+import cliProgress from 'cli-progress';
 import fs from 'fs'; //  sending downloaded image to folder
 import client from 'https'; //  downloading image
 import fetch from 'node-fetch';
 
-// const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-// const bar2 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 const memeUrl = 'https://memegen-link-examples-upleveled.netlify.app/'; //  website with the memes
-// const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 const response = await fetch(memeUrl);
 const body = await response.text(); // body of the html
@@ -62,6 +61,7 @@ function downloadImage(url, filepath) {
 // The Actual Program
 // Deleting directory at the beginning of the program
 //bar1.start(100, 0);
+bar1.start(100, 0);
 manageFolder();
 
 // Downloading The pictures and sending them to the right folder
